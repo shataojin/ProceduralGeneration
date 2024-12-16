@@ -1,0 +1,27 @@
+Start room generates at 0x0
+using "algorithm" generate 2-4 connecting rooms of specific type
+
+*Ignoring secret rooms for now*
+algo
+ - depending on room type, determine if rooms need to be generated 
+ Rules:
+ - Starting room: 
+    - always generates 2-4 connecting rooms, min 1 regular or trap room
+ - Regular room: 
+    - Frequently generates 1 connecting room, can be "leaf room" 
+    - Prefers generating more connections closer to the start
+ - Trap room: same as regular room
+ - Shop, treasure, other special rooms: 
+    - Generates no connections, "leaf room"
+    - Must spawn 1 per floor
+ - Boss: 
+    - requires an ammount of distance from the starting room, always a "leaf room"
+    - Must spawn 1 per floor
+Determining where to spawn rooms:
+ - After the first spawn(from start room):
+    - Directions towards spawn would be given negative weight
+    - Directions that would end up connected to another room will be given negative weight
+    - All other directions will be given positive weight
+      - e.g: 0x0-->0x1-->0x2, 0x2 would be positive
+      - BUT 0x0-->0x1-->1x1 would be given negative weight if a room is at 1x0
+
